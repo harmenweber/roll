@@ -1,0 +1,39 @@
+= Transpose Gherkin Data Table
+
+A simple command line tool to roll dice.
+
+https://kotlinlang.org[image:https://img.shields.io/badge/powered%20by-Kotlin-darkviolet[]]
+https://ajalt.github.io/clikt[image:https://img.shields.io/badge/powered%20by-Clikt-violet[]]
+https://github.com/ajalt/mordant[image:https://img.shields.io/badge/powered%20by-Mordant-red[]]
+https://github.com/mooltiverse/nyx[image:https://img.shields.io/badge/powered%20by-Nyx-blue[]]
+
+== Installation
+
+1. Clone the respository.
+2. Run `./gradlew installDist`.
+This will install a distribution to the folder `build/install/roll` in the repository.
+3. Call the script  `build/install/roll/bin/roll` and pass the dice you want to roll (see <<Usage>> below).
+4. As the full path to the script is rather cumbersome to write all the time, I suggest you create a symbolic link to the script somewhere on your PATH.
+
+== Usage
+
+To roll one or multiple dice you simple call the command line tool and pass the number and dice type as arguments in the following notation:
+
+|===
+| Notation | Description
+
+| d6
+| Rolls one six sided dice
+
+| 1d6
+| Rolls one six sided dice
+
+| 3d8
+| Rolls three eight sided dice
+|===
+
+Roll is not limited to regular dice like d4, d6, d8, d10, d12, d20, d100.
+Roll will also accept other dice like d2, d3, d5, d17, d7631, and so on.
+
+Roll also accepts multiple arguments.
+For example, to roll multiple dice of different types: `roll 3d6 1d10`.

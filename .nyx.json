@@ -1,0 +1,47 @@
+{
+  "preset": "simple",
+  "git": {
+    "remotes": {
+      "origin": {
+        "authenticationMethod": "USER_PASSWORD",
+        "user": "{{#environmentVariable}}GH_TOKEN{{/environmentVariable}}",
+        "password": "{{#environmentVariable}}GH_TOKEN{{/environmentVariable}}"
+      }
+    }
+  },
+  "releaseTypes": {
+    "publicationServices": [
+      "github"
+    ],
+    "remoteRepositories": [
+      "origin"
+    ]
+  },
+  "releaseAssets": {
+    "tar": {
+      "description": "roll {{version}} tar distribution",
+      "fileName": "roll-{{version}}.tar",
+      "path": "build/distributions/roll-{{version}}.tar",
+      "type": "application/x-tar"
+    },
+    "zip": {
+      "description": "roll {{version}} zip distribution",
+      "fileName": "roll-{{version}}.zip",
+      "path": "build/distributions/roll-{{version}}.zip",
+      "type": "application/zip"
+    }
+  },
+  "services": {
+    "github": {
+      "type": "GITHUB",
+      "options": {
+        "AUTHENTICATION_TOKEN": "{{#environmentVariable}}GH_TOKEN{{/environmentVariable}}",
+        "REPOSITORY_NAME": "roll",
+        "REPOSITORY_OWNER": "harmenweber"
+      }
+    }
+  },
+  "summaryFile": "build/.nyx-summary.txt",
+  "stateFile": "build/.nyx-state.json",
+  "verbosity": "DEBUG"
+}

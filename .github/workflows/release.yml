@@ -1,0 +1,39 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - master
+# Avoid running multiple pipelines concurrently to avoid overlapping releases and tags
+concurrency:
+  group: project
+  cancel-in-progress: false
+
+jobs:
+  gradle-release:
+    name: Gradle Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Sources
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+      - name: Validate Gradle Wrapper JARs
+        uses: gradle/wrapper-validation-action@v1
+      - name: Gradle Build
+        uses: gradle/gradle-build-action@v2
+        with:
+          gradle-version: wrapper
+          arguments: build --stacktrace
+      - name: Gradle Release
+        uses: gradle/gradle-build-action@v2
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          gradle-version: wrapper
+          arguments: release --stacktrace
