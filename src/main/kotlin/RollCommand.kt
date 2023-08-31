@@ -1,10 +1,21 @@
 import com.github.ajalt.clikt.core.CliktCommand
+import com.github.ajalt.clikt.parameters.arguments.argument
+import com.github.ajalt.clikt.parameters.arguments.convert
+import com.github.ajalt.clikt.parameters.arguments.multiple
 import com.github.ajalt.mordant.terminal.Terminal
 
 class RollCommand :
-    CliktCommand(help = "Reads a Gherkin data table from stdin, transposes it and prints the result to stdout.") {
+    CliktCommand(help = "Rolls dice as per your arguments: d6, 1d8, 2d10, 3d20, and so on.") {
+    private val dice: List<Dice> by argument(
+        name = "dice",
+        help = "The dice to roll (e.g. d6, 1d8, 2d10, 3d20)"
+    ).convert { Dice.parse(it) }.multiple(required = true)
 
     override fun run() {
-        Terminal().println("Hello World!")
+        val values = this.dice.flatMap { it.roll() }
+
+        val terminal = Terminal()
+        values.forEach(terminal::println)
+        values.sum().also { terminal.muted(message = "Sum: $it", stderr = true) }
     }
 }
