@@ -1,4 +1,4 @@
-= Transpose Gherkin Data Table
+= Roll
 
 A simple command line tool to roll dice.
 
