@@ -12,10 +12,18 @@ class RollCommand :
     ).convert { Dice.parse(it) }.multiple(required = true)
 
     override fun run() {
-        val values = this.dice.flatMap { it.roll() }
+        print(roll())
+    }
 
+    private fun roll(): List<Int> {
+        return this.dice.flatMap { it.roll() }
+    }
+
+    private fun print(values: List<Int>) {
         val terminal = Terminal()
         values.forEach(terminal::println)
-        values.sum().also { terminal.muted(message = "Sum: $it", stderr = true) }
+        if (values.size > 1) {
+            values.sum().also { terminal.muted(message = "Sum: $it", stderr = true) }
+        }
     }
 }
